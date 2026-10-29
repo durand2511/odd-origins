@@ -1,0 +1,8 @@
+:root{--ink:#2b2f4a;--sky:#4a80d4;--sun:#f5c24c;--bg:#f6f8fc}
+*{box-sizing:border-box}body{margin:0;font-family:Nunito,system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6}
+header img.banner{width:100%;max-height:340px;object-fit:cover;display:block}
+nav{display:flex;gap:18px;justify-content:center;padding:14px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.06)}nav a{color:var(--ink);font-weight:800;text-decoration:none}
+main{max-width:760px;margin:0 auto;padding:32px 20px 60px}h1{font-weight:900;font-size:2.2rem;margin:.2em 0}h2{font-weight:900;margin-top:1.6em}
+.card{background:#fff;border-radius:18px;padding:22px 24px;box-shadow:0 6px 18px rgba(0,0,0,.06);margin:18px 0}
+.logo{width:96px;height:96px;border-radius:50%;float:left;margin:0 18px 8px 0}.btn{display:inline-block;background:var(--sun);color:var(--ink);font-weight:900;padding:12px 22px;border-radius:999px;text-decoration:none;box-shadow:0 4px 0 #d49a2c}
+footer{text-align:center;color:#7a8099;font-size:.9rem;padding:24px}
