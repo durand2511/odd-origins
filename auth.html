@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-xAoRF7RD8HLGBwDB8wqQtL4NeJNaKaQWPjcI6pj7Y44='; style-src 'unsafe-inline'">
+<title>Odd Origins login code</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { font-family: system-ui, sans-serif; max-width: 560px; margin: 40px auto; padding: 0 16px; line-height: 1.5; }
+  code { display: block; word-break: break-all; background: rgba(127,127,127,.15); border-radius: 8px; padding: 10px 12px; font-size: 14px; }
+  button { font-size: 18px; border: 0; border-radius: 10px; padding: 14px 20px; width: 100%; margin: 14px 0; background: #1a9f4a; color: #fff; cursor: pointer; }
+  .err { color: #c22; }
+  small { color: #888; }
+</style>
+</head>
+<body>
+<h2>Odd Origins: inlogcode</h2>
+<div id="out"><p>Geen code in deze link.</p></div>
+<p><small>Deze pagina toont alleen wat Instagram of TikTok in de link meestuurt. Er wordt niets opgeslagen of verstuurd.</small></p>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  var out = document.getElementById('out');
+  function el(tag, text, cls) { var e = document.createElement(tag); e.textContent = text; if (cls) e.className = cls; return e; }
+  out.textContent = '';
+  var err = q.get('error') || q.get('error_reason');
+  if (err) {
+    out.appendChild(el('p', 'Inloggen mislukt: ' + err + (q.get('error_description') ? ' (' + q.get('error_description') + ')' : ''), 'err'));
+    return;
+  }
+  var code = (q.get('code') || '').replace(/#_$/, '');
+  var state = q.get('state') || '';
+  if (!code) { out.appendChild(el('p', 'Geen code in deze link.')); return; }
+  var platform = /^tt-/.test(state) ? 'TikTok' : /^ig-/.test(state) ? 'Instagram' : '';
+  out.appendChild(el('p', (platform ? platform + ': ' : '') + 'kopieer dit en plak het in de terminal.'));
+  var line = state + ' ' + code;
+  out.appendChild(el('code', line));
+  var b = el('button', 'Kopieer');
+  b.addEventListener('click', function () {
+    navigator.clipboard.writeText(line).then(function () { b.textContent = 'Gekopieerd'; }, function () { b.textContent = 'Kopiëren lukte niet: selecteer de tekst hierboven'; });
+  });
+  out.appendChild(b);
+  out.appendChild(el('p', 'state: ' + state));
+  // Remove the code from the address bar and history (it is single-use, but no need to keep it around).
+  history.replaceState(null, '', location.pathname);
+})();
+</script>
+</body>
+</html>
